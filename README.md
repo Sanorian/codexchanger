@@ -4,4 +4,5 @@
 ## Backend:
 ```
 pip install fastapi
+pip install mysql-connector-python
 ```
