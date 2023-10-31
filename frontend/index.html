@@ -9,8 +9,28 @@
     </style>
 </head>
 <body>
-    <script>
+    <header>
 
+    </header>
+    <main>
+
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        let loading=0;
+        fetch("http://domain/?loaded="+loading)
+        .then((response)=>(response.json()))
+        .then((data)=>{
+            let main = document.getElementsByClassName('main')[0];
+            data.forEach(post => {
+                main.innerHTML += ```
+
+                ```
+            });
+
+        });
     </script>
 </body>
 </html>
