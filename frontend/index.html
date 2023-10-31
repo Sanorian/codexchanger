@@ -5,31 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codexchanger</title>
     <style>
-        
+        @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+        header{
+            background-color: #0C969E;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .account{
+            background: #CECECE;
+            position: absolute;
+            visibility: collapse;
+            display: flex;
+            flex-direction: column;
+        }
+        .userImage{
+            margin-right: 2vw;
+            margin:0.3vw;
+        }
+        .userImage:hover .account{
+            visibility: visible;
+        }
+        .logo{
+            font-family: 'Odor Mean Chey', serif;
+            font-size: 5vmin;
+            color: #ffffff;
+            margin-left: 2vw;
+        }
+        input{
+            
+        }
     </style>
 </head>
 <body>
     <header>
-
+        <div class="logo">Codexchanger</div>
+        <div class="userImage">
+            <img src="image.png">
+            <div class="account" id="account">
+            </div>
+        </div>
     </header>
     <main>
-
+        <input>
+        <button></button>
     </main>
     <footer>
 
     </footer>
     <script>
-        let loading=0;
-        fetch("http://domain/?loaded="+loading)
-        .then((response)=>(response.json()))
-        .then((data)=>{
-            let main = document.getElementsByClassName('main')[0];
-            data.forEach(post => {
-                main.innerHTML += ```
+        document.addEventListener("DOMContentLoaded", function(){
+            let loading=0, username = localStorage.getItem('username');
+            if (username){
+                document.getElementById('account').innerHTML = `
+                    <a href="location.href='account.html'" style="color:#FFFFFF;">`+username+`</a>
+                    <button style="background-color:#22AE28;" onclick="location.href='create_post.html'">Создать запись</button>
+                    <button style="background-color:#AE2222;">Выйти</button>`;
+            } else {
+                document.getElementById('account').innerHTML = `
+                    <button style="background-color:#22AE28;" onclick="location.href='log_in.html'">Войти</button>`;
+            }
+            fetch("http://domain/?loaded="+loading)
+            .then((response)=>(response.json()))
+            .then((data)=>{
+                let main = document.getElementsByClassName('main')[0];
+                data.forEach(post => {
+                    main.innerHTML += ```
 
-                ```
+                    ```
+                });
+
             });
-
         });
     </script>
 </body>
