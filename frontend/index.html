@@ -6,6 +6,10 @@
     <title>Codexchanger</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+        button{
+            border: 0vmin;
+            font-family: 'Odor Mean Chey', serif;
+        }
         header{
             background-color: #0C969E;
             display: flex;
@@ -13,7 +17,7 @@
             justify-content: space-between;
         }
         .account{
-            background: #CECECE;
+            background-color: #CECECE;
             position: absolute;
             visibility: collapse;
             display: flex;
@@ -33,7 +37,15 @@
             margin-left: 2vw;
         }
         input{
-            
+            background-color: #CECECE;
+            margin: 2vmin;
+            padding: 0.5vmin;
+            padding-left: 1vmin;
+            border: 0vmin;
+            height: 5vh;
+            width: 20vw;
+            font-size: 3vh;
+            border-radius: 1.3vmin;
         }
     </style>
 </head>
@@ -47,7 +59,7 @@
         </div>
     </header>
     <main>
-        <input>
+        <input placeholder="Поиск...">
         <button></button>
     </main>
     <footer>
@@ -63,7 +75,7 @@
                     <button style="background-color:#AE2222;">Выйти</button>`;
             } else {
                 document.getElementById('account').innerHTML = `
-                    <button style="background-color:#22AE28;" onclick="location.href='log_in.html'">Войти</button>`;
+                    <button style="background-color:#22AE28;" onclick="location.href='login.html'">Войти</button>`;
             }
             fetch("http://domain/?loaded="+loading)
             .then((response)=>(response.json()))
