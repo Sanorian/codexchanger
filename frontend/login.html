@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codexchanger</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+        header{
+            background-color: #0C969E;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .logo{
+            font-family: 'Odor Mean Chey', serif;
+            font-size: 5vmin;
+            color: #ffffff;
+            margin-left: 2vw;
+        }
+        input{
+            background-color: #CECECE;
+            padding: 0.5vmin;
+            padding-left: 1vmin;
+            border: 0vmin;
+            font-size: 3vh;
+            border-radius: 3vmin;
+            margin: 1vh;
+            height: 5vh;
+        }
+        main div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1{
+            font-family: 'Odor Mean Chey', serif;
+        }
+        h3{
+            font-family: 'Odor Mean Chey', serif;
+        }
+        button{
+            font-family: 'Odor Mean Chey', serif;
+        }
+        a{
+            font-family: 'Odor Mean Chey', serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Codexchanger</div>
+    </header>
+    <main>
+        <div>
+            <h1>Вход</h1>
+            <h3>Введите почту</h3>
+            <input>
+            <h3 >Введите пароль</h3>
+            <input>
+            <button >Войти</button>
+            <a href="registration.html">Зарегистрироваться</a>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script>
+        if (localStorage.getItem('username')){
+            location.href = "account.html";
+        }
+    </script>
+</body>
+</html>
