@@ -6,10 +6,6 @@
     <title>Codexchanger</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
-        button{
-            border: 0vmin;
-            font-family: 'Odor Mean Chey', serif;
-        }
         header{
             background-color: #0C969E;
             display: flex;
@@ -20,15 +16,41 @@
             background-color: #CECECE;
             position: absolute;
             visibility: collapse;
+            height: 0vmin;
             display: flex;
             flex-direction: column;
+            align-items: start;
+            padding-left: 1vw;
+            padding-right: 3vw;
+            padding-top: 0.5vw;
+            padding-bottom: 0.5vw;
+            transition: height 0.5s;
+        }
+        .account button{
+            border: 0vmin;
+            font-family: 'Odor Mean Chey', serif;
+            border-radius: 1.5vmin;
+            height: 0vmin;
+            transition: height 0.1s;
+        }
+        .account a{
+            border: 0vmin;
+            font-family: 'Odor Mean Chey', serif;
+            height: 0vmin;
+            transition: height 0.1s;
         }
         .userImage{
-            margin-right: 2vw;
-            margin:0.3vw;
+            margin-right: 2.5vw;
         }
         .userImage:hover .account{
             visibility: visible;
+            height: 5vmin;
+        }
+        .userImage:hover .account button{
+            height: 3.5vmin;
+        }
+        .userImage:hover .account a{
+            height: 2vmin;
         }
         .logo{
             font-family: 'Odor Mean Chey', serif;
@@ -51,7 +73,7 @@
 </head>
 <body>
     <header>
-        <div class="logo">Codexchanger</div>
+        <div class="logo" onclick="homeButton()">Codexchanger</div>
         <div class="userImage">
             <img src="image.png">
             <div class="account" id="account">
@@ -59,7 +81,7 @@
         </div>
     </header>
     <main>
-        <input placeholder="Поиск...">
+        <input type="text" placeholder="Поиск...">
         <button></button>
     </main>
     <footer>
@@ -89,6 +111,9 @@
 
             });
         });
+        function homeButton(){
+            location.href = "index.html";
+        }
     </script>
 </body>
 </html>
