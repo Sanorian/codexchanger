@@ -60,13 +60,16 @@
     <main>
         <div class="entry">
             <h1>Регистрация</h1>
+            <h2 id="errorPlace"></h2>
             <h3>Введите почту</h3>
-            <input type="text">
+            <input type="text" id="mail">
+            <h3>Введите никнейм</h3>
+            <input type="text" id="nickname">
             <h3>Введите пароль</h3>
-            <input type="text">
-            <h3>Введите пароль</h3>
-            <input type="text">
-            <button>Зарегистрироваться</button>
+            <input type="text" id="password1">
+            <h3>Повторите пароль</h3>
+            <input type="text" id="password2">
+            <button onclick="registration()">Зарегистрироваться</button>
             <a href="login.html">Войти</a>
         </div>
     </main>
@@ -76,6 +79,21 @@
         }
         function homeButton(){
             location.href = "index.html";
+        }
+        function registration(){
+            let password1 = document.getElementById("password1").value,
+                password2 = document.getElementById("password2").value,
+                mail = document.getElementById("mail").value,
+                nickname = document.getElementById("mail").value,
+                errorPlace = document.getElementById("errorPlace");
+            if (password1==password2){
+                fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+pidCryptUtil.encodeBase64(password1))
+                .then((response)=>response.json()).then((data)=>{
+                    
+                })
+            } else {
+                errorPlace.innerHTML = "Пароли не совпадают";
+            }
         }
     </script>
 </body>
