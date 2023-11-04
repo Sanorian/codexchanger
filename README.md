@@ -6,3 +6,7 @@
 pip install fastapi
 pip install mysql-connector-python
 ```
+## Для запуска серверного приложения (без перехода в папку backend):
+```
+python -m uvicorn backend.server:app --reload
+```
