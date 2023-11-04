@@ -31,6 +31,10 @@
         h1{
             font-family: 'Odor Mean Chey', serif;
         }
+        h2{
+            font-family: 'Odor Mean Chey', serif;
+            color: red;
+        }
         h3{
             font-family: 'Odor Mean Chey', serif;
         }
@@ -87,7 +91,7 @@
                 nickname = document.getElementById("mail").value,
                 errorPlace = document.getElementById("errorPlace");
             if (password1==password2){
-                fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+pidCryptUtil.encodeBase64(password1))
+                fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
                 .then((response)=>response.json()).then((data)=>{
                     
                 })
