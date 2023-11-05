@@ -45,25 +45,25 @@ def getPosts(search: str, language: str, tags: str):
             password="root"
         ) as connection:
             if language and search and tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE code LIKE '%"+search+"% AND WHERE Language='"+language+"'"
+                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND WHERE code LIKE '%"+search+"% AND WHERE Language='"+language+"'"
                 for tag in tags.split(" "):
                     request += " AND WHERE code LIKE '%"+tag+"%'"         
             elif language and search:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE code LIKE '%"+search+"% AND WHERE Language='"+language+"'"
+                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND WHERE code LIKE '%"+search+"% AND WHERE Language='"+language+"'"
             elif language and tags:
-                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE Language="'+language+'"'
+                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND WHERE Language="'+language+'"'
                 for tag in tags.split(" "):
                     request += " AND WHERE code LIKE '%"+tag+"%'"           
             elif search and tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE code LIKE '%"+search+"%'"
+                request = "SELECT ID, Name, Language, Tags, Publication_date WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND FROM programs WHERE code LIKE '%"+search+"%'"
                 for tag in tags.split(" "):
                     request += " AND WHERE code LIKE '%"+tag+"%'"
             elif language:
-                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE Language="'+language+'"'
+                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND WHERE Language="'+language+'"'
             elif search:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE code LIKE '%"+search+"%'"
+                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = '' AND WHERE code LIKE '%"+search+"%'"
             elif tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs"
+                request = "SELECT ID, Name, Language, Tags, Publication_date FROM programs WHERE NOT Moderator_ID = '' AND WHERE NOT Moderation_date = ''"
                 for tag in tags.split(" "):
                     request += " AND WHERE code LIKE '%"+tag+"%'"           
             with connection.cursor() as cursor:
