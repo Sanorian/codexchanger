@@ -37,7 +37,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
         return {"res": "bad"}
 
 @app.get("/getposts")
-def getPosts(search: str, language: str, tags: str):
+def getPosts(search: str | None = None, language: str | None = None, tags: str | None = None):
     try:
         with connect(
             host="localhost:3306",
