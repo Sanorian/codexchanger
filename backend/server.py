@@ -3,18 +3,22 @@ from mysql.connector import connect, Error
 
 app = FastAPI()
 
-# для получения всех постов
+#Получение всех постов, но без Moderator_id, Moderation_time и code
 @app.get("/")
 def getDataAll():
     ...
+
+#Регистрация
 @app.get("/registration")
 def registration(mail: str, nickname: str, password: str):
     ...
 
+#Вход
 @app.get("/login")
 def logIn(mail: str, password: str):
     ...
 
+#Добавление постов
 @app.get("/addpost")
 def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationDate: str):
     try:
@@ -36,6 +40,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
         print(e)
         return {"res": "bad"}
 
+#Получение постов с условием
 @app.get("/getposts")
 def getPosts(search: str | None = None, language: str | None = None, tags: str | None = None):
     try:
@@ -73,3 +78,26 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
     except Error as e:
         print(e)
         return {"res": "bad"}
+
+
+#Админка дальше
+@app.get("/adminlogin")
+def adminlogin(email: str, password: str):
+    try:
+        with connect(
+            host="localhost:3306",
+            user="root",
+            password="root"
+        ) as connection:
+            request = "SELECT ID FROM Admins WHERE E-mail='"+email+"' AND Password='"+password+"'"
+            with connection.cursor() as cursor:
+                cursor.execute(request)
+                for db in cursor:
+                    return {"res": "good", "id": db["ID"]}
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
+
+@app.get("/admingetposts")
+def adminGetAllPosts(postid: str, adminid: str):
+    ...
