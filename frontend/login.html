@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
         header{
             background-color: #0C969E;
@@ -19,6 +20,7 @@
             margin-left: 2vw;
         }
         input{
+            font-family: 'Open Sans', sans-serif;
             background-color: #CECECE;
             padding: 0.5vmin;
             padding-left: 1vmin;
@@ -29,31 +31,31 @@
             height: 5vh;
         }
         h1{
-            font-family: 'Odor Mean Chey', serif;
-        }
-        h2{
-            font-family: 'Odor Mean Chey', serif;
-            color: red;
+            font-family: 'Open Sans', sans-serif;
         }
         h3{
-            font-family: 'Odor Mean Chey', serif;
-        }
-        button{
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         a{
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         .entry{
             align-self: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 7vmin;
+            margin-top: 3vmin;
             border: 0.15vmin #0000001A solid;
             width: 25vw;
             margin-left: 35vw;
             margin-right: 35vw;
+        }
+        .entry button{
+            border-radius: 3vmin;
+            background-color: #22AE28;
+            color: #FFFFFF;
+            font-size: 2.5vmin;
+            font-family: 'Open Sans', sans-serif;
         }
     </style>
 </head>
@@ -64,12 +66,12 @@
     <main>
         <div class="entry">
             <h1>Вход</h1>
-            <h2 id="errorPlace"></h2>
+            <h3 id="errorPlace" style="color: red;"></h3>
             <h3>Введите почту</h3>
             <input type="text">
             <h3 >Введите пароль</h3>
-            <input type="text">
-            <button >Войти</button>
+            <input type="password">
+            <button onclick="logIn()">Войти</button>
             <a href="registration.html">Зарегистрироваться</a>
         </div>
     </main>
@@ -82,6 +84,20 @@
         }
         function homeButton(){
             location.href = "index.html";
+        }
+        function logIn(){
+            let password = document.getElementById("password").value,
+                mail = document.getElementById("mail").value,
+                errorPlace = document.getElementById("errorPlace");
+            if (password=="" || mail==""){
+                errorPlace.innerHTML = "Оба поля должны быть заполнены";
+            } else {
+                errorPlace.innerHTML = "";
+                fetch("http://domain/login?mail="+mail+"&password="+password)
+                .then((response)=>response.json()).then((data)=>{
+                    
+                })
+            }
         }
         fetch("http://domain/login?").then((response)=>(response.json()))
         .then((data)=>{

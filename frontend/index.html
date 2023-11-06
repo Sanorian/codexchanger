@@ -6,6 +6,7 @@
     <title>Codexchanger</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         header{
             background-color: #0C969E;
             display: flex;
@@ -21,21 +22,22 @@
             flex-direction: column;
             align-items: start;
             padding-left: 1vw;
-            padding-right: 3vw;
+            padding-right: 2.65vw;
             padding-top: 0.5vw;
             padding-bottom: 0.5vw;
             transition: height 0.5s;
+            border-radius: 1vmin;
         }
         .account button{
             border: 0vmin;
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
             border-radius: 1.5vmin;
             height: 0vmin;
             transition: height 0.1s;
         }
         .account a{
             border: 0vmin;
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
             height: 0vmin;
             transition: height 0.1s;
         }
@@ -59,6 +61,7 @@
             margin-left: 2vw;
         }
         input{
+            font-family: 'Open Sans', sans-serif;
             background-color: #CECECE;
             margin: 2vmin;
             padding: 0.5vmin;
@@ -66,6 +69,15 @@
             border: 0vmin;
             height: 5vh;
             width: 20vw;
+            font-size: 3vh;
+            border-radius: 1.3vmin;
+        }
+        .navigation button{
+            margin: 2vmin;
+            border: 0vmin;
+            height: 5vh;
+            padding-top: .75vmin;
+            padding-bottom: .75vmin;
             font-size: 3vh;
             border-radius: 1.3vmin;
         }
@@ -81,8 +93,10 @@
         </div>
     </header>
     <main>
-        <input type="text" placeholder="Поиск...">
-        <button></button>
+        <div class="navigation">
+            <input type="text" placeholder="Поиск...">
+            <button></button>
+        </div>
     </main>
     <footer>
 
@@ -93,11 +107,11 @@
             if (username){
                 document.getElementById('account').innerHTML = `
                     <a href="location.href='account.html'" style="color:#FFFFFF;">`+username+`</a>
-                    <button style="background-color:#22AE28;" onclick="location.href='create_post.html'">Создать запись</button>
-                    <button style="background-color:#AE2222;">Выйти</button>`;
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='create_post.html'">Создать запись</button>
+                    <button style="background-color:#AE2222;color:#ffffff">Выйти</button>`;
             } else {
                 document.getElementById('account').innerHTML = `
-                    <button style="background-color:#22AE28;" onclick="location.href='login.html'">Войти</button>`;
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
             }
             fetch("http://domain/?loaded="+loading)
             .then((response)=>(response.json()))

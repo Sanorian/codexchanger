@@ -6,6 +6,7 @@
     <title>Регистрация</title>
     <style>
        @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+       @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         header{
             background-color: #0C969E;
             display: flex;
@@ -20,40 +21,41 @@
         }
         input{
             background-color: #CECECE;
-            padding: 0.5vmin;
+            padding: 0.3vmin;
             padding-left: 1vmin;
             border: 0vmin;
             font-size: 3vh;
             border-radius: 3vmin;
-            margin: 1vh;
+            margin: 0.3vh;
             height: 5vh;
         }
         h1{
-            font-family: 'Odor Mean Chey', serif;
-        }
-        h2{
-            font-family: 'Odor Mean Chey', serif;
-            color: red;
+            font-family: 'Open Sans', sans-serif;
         }
         h3{
-            font-family: 'Odor Mean Chey', serif;
-        }
-        button{
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         a{
-            font-family: 'Odor Mean Chey', serif;
+            font-family: 'Open Sans', sans-serif;
         }
         .entry{
             align-self: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 7vmin;
+            margin-top: 3vmin;
             border: 0.15vmin #0000001A solid;
             width: 25vw;
             margin-left: 35vw;
             margin-right: 35vw;
+        }
+        .entry button{
+            border-radius: 3vmin;
+            background-color: #22AE28;
+            color: #FFFFFF;
+            font-size: 2.5vmin;
+            font-family: 'Open Sans', sans-serif;
+            margin-top: 0.5vmin;
         }
     </style>
 </head>
@@ -64,15 +66,15 @@
     <main>
         <div class="entry">
             <h1>Регистрация</h1>
-            <h2 id="errorPlace"></h2>
+            <h3 id="errorPlace" style="color: red;"></h3>
             <h3>Введите почту</h3>
             <input type="text" id="mail">
             <h3>Введите никнейм</h3>
             <input type="text" id="nickname">
             <h3>Введите пароль</h3>
-            <input type="text" id="password1">
+            <input type="password" id="password1">
             <h3>Повторите пароль</h3>
-            <input type="text" id="password2">
+            <input type="password" id="password2">
             <button onclick="registration()">Зарегистрироваться</button>
             <a href="login.html">Войти</a>
         </div>
@@ -88,15 +90,18 @@
             let password1 = document.getElementById("password1").value,
                 password2 = document.getElementById("password2").value,
                 mail = document.getElementById("mail").value,
-                nickname = document.getElementById("mail").value,
+                nickname = document.getElementById("nickname").value,
                 errorPlace = document.getElementById("errorPlace");
-            if (password1==password2){
+            if (password1!=password2){
+                errorPlace.innerHTML = "Пароли не совпадают";
+            } else if (password1=="" || password2=="" || mail=="" || nickname==""){
+                errorPlace.innerHTML = "Все поля должны быть заполнены";
+            } else {
+                errorPlace.innerHTML = "";
                 fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
                 .then((response)=>response.json()).then((data)=>{
                     
                 })
-            } else {
-                errorPlace.innerHTML = "Пароли не совпадают";
             }
         }
     </script>
