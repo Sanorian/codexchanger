@@ -20,7 +20,7 @@ def logIn(mail: str, password: str):
 
 #Добавление постов
 @app.get("/addpost")
-def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationDate: str):
+def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationdate: str):
     try:
         with connect(
             host="localhost:3306",
@@ -32,7 +32,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
                 cursor.execute(getIDRequest)
                 for db in cursor:
                     id = int(db[len(db)-1]["ID"]) + 1
-            request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", "+name+", "+code+", "+ language+", "+tags+", "+publicationDate+', "", "")'
+            request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", "+name+", "+code+", "+ language+", "+tags+", "+publicationdate+', "", "")'
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 return {"res": "good"}
@@ -89,7 +89,7 @@ def adminlogin(email: str, password: str):
             user="root",
             password="root"
         ) as connection:
-            request = "SELECT ID FROM Admins WHERE E-mail='"+email+"' AND Password='"+password+"'"
+            request = "SELECT ID FROM Admins WHERE E-mail='"+email+"' AND WHERE Password='"+password+"'"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 for db in cursor:
@@ -101,3 +101,19 @@ def adminlogin(email: str, password: str):
 @app.get("/admingetposts")
 def adminGetAllPosts(postid: str, adminid: str):
     ...
+
+@app.get("/adminmoderatepost")
+def adminModeratePost(postid: str, adminid: str, moderationdate: str, adminpassword: str):
+    try:
+        with connect(
+            host="localhost:3306",
+            user="root",
+            password="root"
+        ) as connection:
+            request = "UPDATE programs SET Moderation_Date = '"+moderationdate+"', Moderation_ID='"+adminid+"' WHERE ID='"+postid+"' AND EXISTS (SELECT * FROM Admins WHERE ID='"+adminid+"' AND Password='"+adminpassword+"')"
+            with connection.cursor() as cursor:
+                cursor.execute(request)
+                return {"res": "good"}
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
