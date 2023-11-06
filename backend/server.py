@@ -73,8 +73,7 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
                     request += " AND WHERE code LIKE '%"+tag+"%'"           
             with connection.cursor() as cursor:
                 cursor.execute(request)
-                for db in cursor:
-                    return db
+                return cursor.fetchall()
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -92,8 +91,7 @@ def adminlogin(email: str, password: str):
             request = "SELECT ID FROM Admins WHERE E-mail='"+email+"' AND WHERE Password='"+password+"'"
             with connection.cursor() as cursor:
                 cursor.execute(request)
-                for db in cursor:
-                    return {"res": "good", "id": db["ID"]}
+                return cursor.fetchall()
     except Error as e:
         print(e)
         return {"res": "bad"}
