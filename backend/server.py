@@ -22,7 +22,7 @@ def logIn(mail: str, password: str):
 def getOnePost(postid: int):
     try:
         with connect(
-            host="localhost:3306",
+            host="localhost",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -39,7 +39,7 @@ def getOnePost(postid: int):
 def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationdate: str):
     try:
         with connect(
-            host="localhost:3306",
+            host="localhost",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -61,7 +61,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
 def getPosts(search: str | None = None, language: str | None = None, tags: str | None = None):
     try:
         with connect(
-            host="localhost:3306",
+            host="localhost",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -101,7 +101,7 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
 def adminlogin(email: str, password: str):
     try:
         with connect(
-            host="localhost:3306",
+            host="localhost",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -122,7 +122,7 @@ def adminGetAllPosts(postid: str, adminid: str):
 def adminModeratePost(postid: int, adminid: int, moderationdate: str, adminpassword: str):
     try:
         with connect(
-            host="localhost:3306",
+            host="localhost",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
