@@ -11,12 +11,39 @@ def getDataAll():
 #Регистрация
 @app.get("/registration")
 def registration(mail: str, nickname: str, password: str):
-    ...
+    try:
+        with connect(
+            host="localhost",
+            user="lord",
+            password="lord",
+            database="CodeXChanger_DB"
+        ) as connection:
+            with connection.cursor() as cursor:
+                getEmail = "SELECT * FROM Users WHERE Email='"+mail+"'"
+                cursor.execute(getEmail)
+                if len(cursor.fetchall())==0:
+                    return {"res":"bad", "reason":"mail"}
+                getName = "SELECT * FROM Users WHERE UserName='"+nickname+"'"
+                cursor.execute(getName)
+                if len(cursor.fetchall())==0:
+                    return {"res":"bad", "reason":"nickname"}
+                getIDRequest = "SELECT ID FROM Users"
+                cursor.execute(getIDRequest)
+                id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
+                request = "INSERT INTO Users (ID, UserName, Email, Password) VALUES ("+id+", '"+nickname+"', '"+mail+"', '"+password+"')"
+                cursor.execute(request)
+                return {"res": "good"}
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
+    
+
 
 #Вход
 @app.get("/login")
 def logIn(mail: str, password: str):
     ...
+
 #Получение конкретного поста
 @app.get("/getpost")
 def getOnePost(postid: int):
@@ -34,6 +61,7 @@ def getOnePost(postid: int):
     except Error as e:
         print(e)
         return {"res": "bad"}
+
 #Добавление постов
 @app.get("/addpost")
 def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationdate: str):
