@@ -101,7 +101,18 @@
                 errorPlace.innerHTML = "";
                 fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
                 .then((response)=>response.json()).then((data)=>{
-                    
+                    if (data.res=='bad'){
+                        switch(data.reason){
+                            case "mail":
+                                errorPlace.innerHTML = "Пароли не совпадают";
+                                break;
+                            case "nickname":
+                                errorPlace.innerHTML = "Имя пользователя уже занято";
+                                break;
+                        }
+                    } else {
+                        errorPlace.innerHTML = "Вы успешно зарегистрированы";
+                    }
                 })
             }
         }
