@@ -1,8 +1,15 @@
 from fastapi import FastAPI
 from mysql.connector import connect, Error
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 #Получение всех постов, но без Moderator_id, Moderation_time и Code
 @app.get("/")
 def getDataAll():
