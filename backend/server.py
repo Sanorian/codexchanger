@@ -39,7 +39,7 @@ def registration(mail: str, nickname: str, password: str):
                 id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
                 request = "INSERT INTO Users (ID, UserName, Email, Password) VALUES ("+id+", '"+nickname+"', '"+mail+"', '"+password+"')"
                 cursor.execute(request)
-                return {"res": "good"}
+                return {"res": "good", "id": id, "password": password, "username": nickname}
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -83,8 +83,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
                 getIDRequest = "SELECT ID FROM Programs"
                 cursor.execute(getIDRequest)
                 id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
-            request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", "+name+", "+code+", "+ language+", "+tags+", "+publicationdate+', "", "")'
-            with connection.cursor() as cursor:
+                request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", "+name+", "+code+", "+ language+", "+tags+", "+publicationdate+', "", "")'
                 cursor.execute(request)
                 return {"res": "good"}
     except Error as e:
