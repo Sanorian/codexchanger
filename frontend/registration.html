@@ -99,21 +99,27 @@
                 errorPlace.innerHTML = "Все поля должны быть заполнены";
             } else {
                 errorPlace.innerHTML = "";
-                fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
-                .then((response)=>response.json()).then((data)=>{
-                    if (data.res=='bad'){
-                        switch(data.reason){
-                            case "mail":
-                                errorPlace.innerHTML = "Пароли не совпадают";
-                                break;
-                            case "nickname":
-                                errorPlace.innerHTML = "Имя пользователя уже занято";
-                                break;
+                try{
+                    fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
+                    .then((response)=>response.json()).then((data)=>{
+                        if (data.res=='bad'){
+                            switch(data.reason){
+                                case "mail":
+                                    errorPlace.innerHTML = "Почта уже использовалась для регистрации";
+                                    break;
+                                case "nickname":
+                                    errorPlace.innerHTML = "Имя пользователя уже занято";
+                                    break;
+                            }
+                        } else {
+                            errorPlace.innerHTML = "Вы успешно зарегистрированы";
+                            localStorage.setItem("id", data.id);
+                            localStorage.setItem("password", data.password);
+                            localStorage.setItem("username", data.username);
+                            location.href="index.html";
                         }
-                    } else {
-                        errorPlace.innerHTML = "Вы успешно зарегистрированы";
-                    }
-                })
+                    })
+                } catch(err){errorPlace.innerHTML="Что-то пошло не так";}
             }
         }
     </script>
