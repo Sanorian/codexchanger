@@ -98,7 +98,20 @@
                 errorPlace.innerHTML = "";
                 fetch("http://domain/login?mail="+mail+"&password="+password)
                 .then((response)=>response.json()).then((data)=>{
-                    
+                    if (data.res=='bad'){
+                        switch (data.reason) {
+                            case "mail":
+                                errorPlace = "Пользователя с такой почтой нет";
+                                break;
+                            case "password":
+                                errorPlace = "Возможно вы ошиблись паролем";
+                                break;
+                        }
+                    } else {
+                        localStorage.setItem("mail", data.mail);
+                        localStorage.setItem("password", data.password);
+                        location.href="index.html";
+                    }
                 })
             }
         }
