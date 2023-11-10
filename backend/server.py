@@ -37,7 +37,7 @@ def registration(mail: str, nickname: str, password: str):
                 request = "INSERT INTO Users (UserName, Email, Password) VALUES ('"+nickname+"', '"+mail+"', '"+password+"')"
                 cursor.execute(request)
                 connection.commit()
-                return {"res": "good", "id": id, "password": password, "username": nickname}
+                return {"res": "good", "password": password, "username": nickname}
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -55,15 +55,14 @@ def logIn(mail: str, password: str):
             database="CodeXChanger_DB"
         ) as connection:
             with connection.cursor() as cursor:
-                getMail = "SELECT Password FROM Users WHERE Email='" + mail + "'"
+                getMail = "SELECT Password, UserName FROM Users WHERE Email='" + mail + "'"
                 cursor.execute(getMail)
                 detectedUserPassword = cursor.fetchone()
+                connection.commit()
                 if detectedUserPassword == None:
-                    connection.commit()
                     return {"res": "bad", "reason": "mail"}
                 if detectedUserPassword[0] == password:
-                    connection.commit()
-                    return {"res": "good", "email": mail, "password": password}
+                    return {"res": "good", "username": detectedUserPassword["UserName"], "password": password}
                 return {"res": "bad", "reason": "password"}
     except Error as e:
         print(e)
@@ -175,8 +174,23 @@ def adminlogin(email: str, password: str):
         return {"res": "bad"}
 
 @app.get("/admingetposts")
-def adminGetAllPosts(postid: str, adminid: str):
-    ...
+def adminGetAllPosts(password: str, adminid: str):
+    try:
+        with connect(
+            host="localhost",
+            user="lord",
+            password="lord",
+            database="CodeXChanger_DB"
+        ) as connection:
+            request = "SELECT * FROM Programs WHERE Moderator_ID = '' AND Moderation_date = '' AND EXISTS(SELECT * FROM Admins WHERE ID="+adminid+" AND Password='"+password+"')"
+            with connection.cursor() as cursor:
+                cursor.execute(request)
+                postsData = cursor.fetchall()
+                connection.commit()
+                return postsData
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
 
 @app.get("/adminmoderatepost")
 def adminModeratePost(postid: int, adminid: int, moderationdate: str, adminpassword: str):
