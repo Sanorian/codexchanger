@@ -49,7 +49,25 @@ def registration(mail: str, nickname: str, password: str):
 #Вход
 @app.get("/login")
 def logIn(mail: str, password: str):
-    ...
+    try:
+        with connect(
+            host="localhost",
+            user="lord",
+            password="lord",
+            database="CodeXChanger_DB"
+        ) as connection:
+            with connection.cursor() as cursor:
+                getMail = "SELECT Password FROM Users WHERE Email='" + mail + "'"
+                cursor.execute(getMail)
+                detectedUserPassword = cursor.fetchone()
+                if detectedUserPassword == None:
+                    return {"res": "bad", "reason": "mail"}
+                if detectedUserPassword[0] == password:
+                    return {"res": "good", "email": mail, "password": password}
+                return {"res": "bad", "reason": "password"}
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
 
 #Получение конкретного поста
 @app.get("/getpost")
