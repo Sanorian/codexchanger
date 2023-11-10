@@ -60,6 +60,11 @@
             color: #ffffff;
             margin-left: 2vw;
         }
+        .navigation{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
         input{
             font-family: 'Open Sans', sans-serif;
             background-color: #CECECE;
@@ -77,13 +82,44 @@
             margin: 2vmin;
             margin-left:1vmin;
             border: 0vmin;
-            height: 6.2vmin;
-            width: 6vmin;
-            padding: 0.75vmin;
+            height: 7vmin;
+            width: 7vmin;
+            padding: 1.35vmin;
             padding-bottom: 1.75vmin;
             font-size: 3vh;
             border-radius: 1.3vmin;
             background-color: #D9D9D9;
+        }
+        .navigation button:hover, .navigation button:focus{
+            background-color: #CECECE;
+        }
+        .navigationButton{
+            position: relative;
+            display: inline-block;
+        }
+        .filterDropdown{
+            background-color: #CECECE;
+            position: absolute;
+            display: none;
+            flex-direction: column;
+            align-items: start;
+            padding-left: 1vw;
+            padding-right: 1vw;
+            padding-top: 0.5vw;
+            padding-bottom: 0.5vw;
+            border-radius: 1vmin;
+            font-family: 'Open Sans', sans-serif;
+            z-index: 1;
+        }
+        .show{
+            display:block;
+        }
+        .tagArea{
+            background-color: #A8A8A8;
+            border-radius: 1.5vmin;
+            height: 7vmin;
+            width: 15vmin;
+            align-items: start;
         }
     </style>
 </head>
@@ -99,18 +135,26 @@
     <main>
         <div class="navigation">
             <input type="text" placeholder="Поиск...">
-            <button onclick=""><svg
-                version="1.1"
-                baseProfile="full"
-                width="100%"
-                height="100%">
-                <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="1vmin" fill="#898989"/>
-                <circle cx="0.75vmin" cy="1.15vmin" r="0.5vmin" fill="#898989"/>
-                <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="2vmin" fill="#898989"/>
-                <circle cx="3.75vmin" cy="2.15vmin" r="0.5vmin" fill="#898989"/>
-                <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="3vmin" fill="#898989"/>
-                <circle cx="0.75vmin" cy="3.15vmin" r="0.5vmin" fill="#898989"/>
-            </svg></button>
+            <div class="navigationButton">
+                <button onclick="navigationButton()"><svg
+                    version="1.1"
+                    baseProfile="full"
+                    width="100%"
+                    height="100%">
+                    <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="1vmin" fill="#898989"/>
+                    <circle cx="0.75vmin" cy="1.15vmin" r="0.5vmin" fill="#898989"/>
+                    <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="2vmin" fill="#898989"/>
+                    <circle cx="3.75vmin" cy="2.15vmin" r="0.5vmin" fill="#898989"/>
+                    <rect width="3.5vmin" height="0.3vmin" x="0.5vmin" y="3vmin" fill="#898989"/>
+                    <circle cx="0.75vmin" cy="3.15vmin" r="0.5vmin" fill="#898989"/>
+                </svg></button>
+                <div class="filterDropdown" id="dropdown">
+                    <div class="tagArea">
+                    </div>
+                    <button onclick="" class="languageButton">
+                    </button>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
@@ -142,6 +186,9 @@
         });
         function homeButton(){
             location.href = "index.html";
+        }
+        function navigationButton(){
+            document.getElementById("dropdown").classList.toggle("show");
         }
     </script>
 </body>
