@@ -101,7 +101,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
                 getIDRequest = "SELECT ID FROM Programs"
                 cursor.execute(getIDRequest)
                 id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
-                request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", "+name+", "+code+", "+ language+", "+tags+", "+publicationdate+', "", "")'
+                request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+", '', '')"
                 cursor.execute(request)
                 return {"res": "good"}
     except Error as e:
