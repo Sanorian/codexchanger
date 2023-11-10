@@ -1,22 +1,70 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codexchanger</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codexchanger</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+    header{
+        background-color: #0C969E;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logo{
+        font-family: 'Odor Mean Chey', serif;
+        font-size: 5vmin;
+        color: #ffffff;
+        margin-left: 2vw;
+    }
+    main{
+        display: flex;
+        flex-direction: column;
+    }
+    main .bottom_piece{
+        display: flex;
+        flex-direction: row;
+    }
+    main .bottom_piece div{
+        display: flex;
+        flex-direction: column;
+    }
+    textarea{
+        resize: none;
+    }
+</style>
 </head>
 <body>
-    <header>
-
-    </header>
-    <main>
-
-    </main>
-    <footer>
-
-    </footer>
-    <script>
+<header>
+    <div class="logo" onclick="homeButton()">Codexchanger</div>
+</header>
+<main>
+    <h2>Название</h2>
+    <input placeholder="Фильтрация пузырьком" id="name">
+    <h2>Код</h2>
+    <textarea placeholder="print('Hello world!')" id="code"></textarea>
+    <div class="bottom_piece">
+        <div>
+            <h2>Теги</h2>
+            <input placeholder="фильтрация сервер бд" id="tags">
+        </div>
+        <div>
+            <h2>Язык</h2>
+            <input id="language" placeholder="Python">
+        </div>
+    </div>
+</main>
+<footer>
+</footer>
+<script>
+    
+    if (localStorage.getItem("username")){
+    }
+    function homeButton(){
+        location.href="index.html";
+    }
+    document.addEventListener("DOMContentLoaded", function(){
         
-    </script>
+    });
+</script>
 </body>
 </html>

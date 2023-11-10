@@ -50,12 +50,14 @@
             margin-left: 35vw;
             margin-right: 35vw;
             padding-bottom: 2vmin;
+            padding-bottom: 3vmin;
         }
         .entry button{
-            border-radius: 3vmin;
+            border-radius: 2.5vmin;
             background-color: #22AE28;
             border: 0vmin;
             color: #FFFFFF;
+            padding:0.75vmin;
             font-size: 2.5vmin;
             font-family: 'Open Sans', sans-serif;
         }
@@ -78,7 +80,6 @@
         </div>
     </main>
     <footer>
-
     </footer>
     <script>
         if (localStorage.getItem('username')){
@@ -97,7 +98,20 @@
                 errorPlace.innerHTML = "";
                 fetch("http://domain/login?mail="+mail+"&password="+password)
                 .then((response)=>response.json()).then((data)=>{
-                    
+                    if (data.res=='bad'){
+                        switch (data.reason) {
+                            case "mail":
+                                errorPlace = "Пользователя с такой почтой нет";
+                                break;
+                            case "password":
+                                errorPlace = "Возможно вы ошиблись паролем";
+                                break;
+                        }
+                    } else {
+                        localStorage.setItem("mail", data.mail);
+                        localStorage.setItem("password", data.password);
+                        location.href="index.html";
+                    }
                 })
             }
         }
