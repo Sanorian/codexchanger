@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админка</title>
+</head>
+<body>
+    <main>
+        <h2 id="errorPlace" style="color:red;"></h2>
+        <h2>Почта:</h2>
+        <input id="email">
+        <h2>Пароль:</h2>
+        <input id="password">
+        <button onclick="logIn()">Войти</button>
+    </main>
+    <script>
+        function logIn(){
+            fetch('http://domain/adminlogin?email='+document.getElementById("email")+'&password='+document.getElementById("password")).
+            then(response => response.json())
+            .then((data)=>{
+                if (data.res=="good"){
+                    fetch('http://domain/adminlogin')
+                    document.getElementsByTagName("main")[0].innerHTML = '<aside></aside>';
+                } else {
+                    document.getElementById("errorPlace") = "Что-то пошло не так";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
