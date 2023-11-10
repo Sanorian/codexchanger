@@ -34,10 +34,7 @@ def registration(mail: str, nickname: str, password: str):
                 cursor.execute(getName)
                 if len(cursor.fetchall())!=0:
                     return {"res":"bad", "reason":"nickname"}
-                getIDRequest = "SELECT ID FROM Users"
-                cursor.execute(getIDRequest)
-                id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
-                request = "INSERT INTO Users (ID, UserName, Email, Password) VALUES ("+id+", '"+nickname+"', '"+mail+"', '"+password+"')"
+                request = "INSERT INTO Users (UserName, Email, Password) VALUES ('"+nickname+"', '"+mail+"', '"+password+"')"
                 cursor.execute(request)
                 connection.commit()
                 return {"res": "good", "id": id, "password": password, "username": nickname}
@@ -105,8 +102,7 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
             with connection.cursor() as cursor:
                 getIDRequest = "SELECT ID FROM Programs"
                 cursor.execute(getIDRequest)
-                id = int(cursor.fetchall()[len(cursor.fetchall())-1]["ID"]) + 1
-                request = "INSERT INTO Programs (ID, User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+id+", "+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+"', '', '')"
+                request = "INSERT INTO Programs (User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+"', '', '')"
                 cursor.execute(request)
                 connection.commit()
                 return {"res": "good"}
