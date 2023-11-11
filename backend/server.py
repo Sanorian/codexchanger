@@ -24,7 +24,8 @@ def getDataAll():
                 query = "SELECT ID, User_ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs ORDER BY ID DESC"
                 cursor.execute(query)
                 posts = cursor.fetchall()
-                return {"res": "good" }
+                connection.commit()
+                return {"res": "good", "posts": posts}
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -92,7 +93,7 @@ def getOnePost(postid: int):
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "SELECT ID, Name, Language, Tags, Publication_date, Code FROM Programs WHERE ID='"+postid+"'"
+            request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate, Code FROM Programs WHERE ID='"+postid+"'"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postData = cursor.fetchall()
@@ -104,7 +105,7 @@ def getOnePost(postid: int):
 
 #Добавление постов
 @app.get("/addpost")
-def addPost(userID: int, name: str, code: str, language: str, tags: str, publicationdate: str):
+def addPost(username: str, name: str, code: str, language: str, tags: str, publicationdate: str):
     try:
         with connect(
             host="localhost",
@@ -113,9 +114,10 @@ def addPost(userID: int, name: str, code: str, language: str, tags: str, publica
             database="CodeXChanger_DB"
         ) as connection:
             with connection.cursor() as cursor:
-                getIDRequest = "SELECT ID FROM Programs"
+                getIDRequest = "SELECT ID FROM Users WHERE Username='"+username+"'"
                 cursor.execute(getIDRequest)
-                request = "INSERT INTO Programs (User_ID, Name, Code, Language, Tags, Publication_date, Moderator_ID, Moderation_Date) VALUES ("+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+"', '', '')"
+                userID = cursor.fetchone()["ID"]
+                request = "INSERT INTO Programs (User_ID, ProgramName, Code, CodeLanguage, Tags, PublicationDate, Moderator_ID, ModerationDate) VALUES ("+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+"', '', '')"
                 cursor.execute(request)
                 connection.commit()
                 return {"res": "good"}
@@ -134,25 +136,25 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
             database="CodeXChanger_DB"
         ) as connection:
             if language and search and tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND Code LIKE '%"+search+"% AND Language='"+language+"'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND Code LIKE '%"+search+"% AND CodeLanguage='"+language+"'"
                 for tag in tags.split(" "):
                     request += " AND WHERE Code LIKE '%"+tag+"%'"         
             elif language and search:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND Code LIKE '%"+search+"% AND Language='"+language+"'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND Code LIKE '%"+search+"% AND CodeLanguage='"+language+"'"
             elif language and tags:
-                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND Language="'+language+'"'
+                request = 'SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND CodeLanguage="'+language+'"'
                 for tag in tags.split(" "):
                     request += " AND WHERE Code LIKE '%"+tag+"%'"           
             elif search and tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND  Code LIKE '%"+search+"%'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND  Code LIKE '%"+search+"%'"
                 for tag in tags.split(" "):
                     request += " AND WHERE Code LIKE '%"+tag+"%'"
             elif language:
-                request = 'SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND Language="'+language+'"'
+                request = 'SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND CodeLanguage="'+language+'"'
             elif search:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = '' AND Code LIKE '%"+search+"%'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = '' AND Code LIKE '%"+search+"%'"
             elif tags:
-                request = "SELECT ID, Name, Language, Tags, Publication_date FROM Programs WHERE NOT Moderator_ID = '' AND NOT Moderation_date = ''"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE NOT Moderator_ID = '' AND NOT ModerationDate = ''"
                 for tag in tags.split(" "):
                     request += " AND WHERE Code LIKE '%"+tag+"%'"           
             with connection.cursor() as cursor:
@@ -196,7 +198,7 @@ def adminGetAllPosts(password: str, adminid: str):
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "SELECT * FROM Programs WHERE Moderator_ID = '' AND Moderation_date = '' AND EXISTS(SELECT * FROM Admins WHERE ID="+adminid+" AND Password='"+password+"')"
+            request = "SELECT * FROM Programs WHERE Moderator_ID = '' AND ModerationDate = '' AND EXISTS(SELECT * FROM Admins WHERE ID="+adminid+" AND Password='"+password+"')"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
@@ -215,7 +217,7 @@ def adminModeratePost(postid: int, adminid: int, moderationdate: str, adminpassw
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "UPDATE Programs SET Moderation_Date = '"+moderationdate+"', Moderation_ID="+adminid+" WHERE ID="+postid+" AND EXISTS (SELECT * FROM Admins WHERE ID="+adminid+" AND Password='"+adminpassword+"')"
+            request = "UPDATE Programs SET ModerationDate = '"+moderationdate+"', Moderation_ID="+adminid+" WHERE ID="+postid+" AND EXISTS (SELECT * FROM Admins WHERE ID="+adminid+" AND Password='"+adminpassword+"')"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 connection.commit()
