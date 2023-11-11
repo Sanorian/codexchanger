@@ -13,7 +13,21 @@ app.add_middleware(
 #Получение всех постов, но без Moderator_id, Moderation_time и Code
 @app.get("/")
 def getDataAll():
-    ...
+    try:
+        with connect(
+            host="localhost",
+            user="lord",
+            password="lord",
+            database="CodeXChanger_DB"
+        ) as connection:
+            with connection.cursor() as cursor:
+                query = "SELECT ID, User_ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs ORDER BY ID DESC"
+                cursor.execute(query)
+                posts = cursor.fetchall()
+                return {"res": "good" }
+    except Error as e:
+        print(e)
+        return {"res": "bad"}
 
 #Регистрация
 @app.get("/registration")
