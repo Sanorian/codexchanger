@@ -24,7 +24,6 @@ def getDataAll():
                 query = "SELECT ID, User_ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs ORDER BY ID DESC"
                 cursor.execute(query)
                 posts = cursor.fetchall()
-                connection.commit()
                 return {"res": "good", "posts": posts}
     except Error as e:
         print(e)
@@ -73,7 +72,6 @@ def logIn(mail: str, password: str):
                 getMail = "SELECT Password, UserName FROM Users WHERE Email='" + mail + "'"
                 cursor.execute(getMail)
                 detectedUserPassword = cursor.fetchone()
-                connection.commit()
                 if detectedUserPassword == None:
                     return {"res": "bad", "reason": "mail"}
                 if detectedUserPassword[0] == password:
@@ -97,7 +95,6 @@ def getOnePost(postid: str):
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postData = cursor.fetchone()
-                connection.commit()
                 if postData == None:
                     return {"res": "bad", "reason": "postid"}
                 return postData
@@ -163,7 +160,6 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
-                connection.commit()
                 return postsData
     except Error as e:
         print(e)
@@ -185,9 +181,7 @@ def adminlogin(email: str, password: str):
                 cursor.execute(request)
                 adminAccount = cursor.fetchone()
                 if adminAccount == None:
-                    connection.commit()
                     return {"res": "bad"}
-                connection.commit()
                 return {"res": "good"}
     except Error as e:
         print(e)
@@ -206,7 +200,6 @@ def adminGetAllPosts(password: str, adminid: str):
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
-                connection.commit()
                 return postsData
     except Error as e:
         print(e)
