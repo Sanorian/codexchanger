@@ -22,7 +22,7 @@
             flex-direction: column;
             align-items: start;
             padding-left: 1vw;
-            padding-right: 2.65vw;
+            padding-right: 1.7vw;
             padding-top: 0.5vw;
             padding-bottom: 0.5vw;
             transition: height 0.5s;
@@ -34,19 +34,23 @@
             border-radius: 1.5vmin;
             height: 0vmin;
             transition: height 0.1s;
+            margin-bottom:0.5vmin;
+            margin-top: 0.5vmin;
         }
         .account a{
             border: 0vmin;
             font-family: 'Open Sans', sans-serif;
             height: 0vmin;
             transition: height 0.1s;
+            margin-top: 0.5vmin;
+            margin-bottom:0.5vmin;
         }
         .userImage{
-            margin-right: 2.5vw;
+            margin-right: 5vw;
         }
         .userImage:hover .account{
             visibility: visible;
-            height: 5vmin;
+            height: auto;
         }
         .userImage:hover .account button{
             height: 3.5vmin;
@@ -121,6 +125,11 @@
             width: 15vmin;
             align-items: start;
         }
+        .errorMain{
+            font-family: 'Open Sans', sans-serif;
+            font-size: 10vmin;
+            color:red;
+        }
     </style>
 </head>
 <body>
@@ -167,28 +176,39 @@
                 document.getElementById('account').innerHTML = `
                     <a href="location.href='#'" style="color:#FFFFFF;">`+username+`</a>
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='create_post.html'">Создать запись</button>
-                    <button style="background-color:#AE2222;color:#ffffff">Выйти</button>`;
+                    <button style="background-color:#AE2222;color:#ffffff" onclick="logOut()">Выйти</button>`;
             } else {
                 document.getElementById('account').innerHTML = `
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
             }
-            fetch("http://domain/?loaded="+loading)
-            .then((response)=>(response.json()))
-            .then((data)=>{
-                let main = document.getElementsByClassName('main')[0];
-                data.forEach(post => {
-                    main.innerHTML += ```
+            try{
+                fetch("http://domain/")
+                .then((response)=>(response.json()))
+                .then((data)=>{
+                    let main = document.getElementsByClassName('main')[0];
+                    data.forEach(post => {
+                        main.innerHTML += ```
 
-                    ```
+                        ```
+                    });
                 });
-
-            });
+            } catch (e) {
+                console.log(e);
+                document.getElementsByClassName("main")[0].classList.add("errorMain");
+                document.getElementsByClassName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";
+            }
         });
         function homeButton(){
             location.href = "index.html";
         }
         function navigationButton(){
             document.getElementById("dropdown").classList.toggle("show");
+        }
+        function logOut(){
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+            document.getElementById('account').innerHTML = `
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
         }
     </script>
 </body>
