@@ -1,0 +1,89 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codexchanger</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+    header{
+        background-color: #0C969E;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logo{
+        font-family: 'Odor Mean Chey', serif;
+        font-size: 5vmin;
+        color: #ffffff;
+        margin-left: 2vw;
+    }
+    .heading{
+        text-align: center;
+    }
+    textarea{
+        margin-left: auto;
+        margin-right: auto;
+        display:flex;
+        width: 80%;
+        height: 50%;
+        border-radius: 10px;
+    }
+    .settings{
+        display: flex;
+        justify-content: center;
+    }
+    .tags{
+        text-align: center;
+    }
+    .language{
+        text-align: center;
+    }
+    input{
+        border-radius: 25px;
+        width: 500px;
+    }
+    .button-back{
+        margin-top: 150px;
+        width: 200px;
+        margin-left: 100px;
+        border-radius: 25px;
+        background-color: #00FF00;
+        color: #FFFFFF;
+        height: 30px;
+        font-size: 20px;
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="logo" onclick="homeButton()">Codexchanger</div>
+</header>
+<main>
+    <h2 class="heading">Название записи</h2>
+    <textarea placeholder="ТЕКСТ" id="code"></textarea>
+    <div class="settings">
+        <div style="position: absolute; left: 10%">
+            <h2 class="tags">Тэги</h2>
+            <input placeholder="">
+        </div>
+        <div style="position: absolute; right: 10%">
+            <h2 class="language">Язык</h2>
+            <input placeholder="JavaScript">
+        </div>
+    </div>
+    <button class="button-back" onclick="homeButton()">Назад</button>
+</main>
+<footer>
+</footer>
+<script>
+
+    if (localStorage.getItem("username")){
+    }
+    function homeButton(){
+        location.href="index.html";
+    }
+    document.addEventListener("DOMContentLoaded", function(){
+
+    });
+</script>
+</body>
+</html>
