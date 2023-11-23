@@ -59,39 +59,59 @@
         height: 30px;
         font-size: 20px;
     }
+    h1{
+        font-family: 'Open Sans', sans-serif; 
+    }
 </style>
 </head>
 <body>
-<header>
-    <div class="logo" onclick="homeButton()">Codexchanger</div>
-</header>
-<main>
-    <h2 class="heading">Название записи</h2>
-    <div class="code"><p id="code"></p></div>
-    <div class="settings">
-        <div style="position: absolute; left: 10%">
-            <h2 class="tags">Тэги</h2>
-            <div class="setting"><p id="tags">Фильтрация</p></div>
+    <header>
+        <div class="logo" onclick="homeButton()">Codexchanger</div>
+    </header>
+    <main>
+        <h2 class="heading" id="name"></h2>
+        <div class="code"><p id="code"></p></div>
+        <div class="settings">
+            <div style="position: absolute; left: 10%">
+                <h2 class="tags">Тэги</h2>
+                <div class="setting"><p id="tags"></p></div>
+            </div>
+            <div style="position: absolute; right: 10%">
+                <h2 class="language">Язык</h2>
+                <div class="setting"><p id="language"></p></div>
+            </div>
         </div>
-        <div style="position: absolute; right: 10%">
-            <h2 class="language">Язык</h2>
-            <div class="setting"><p id="language">Javascript</p></div>
-        </div>
-    </div>
-    <button class="button-back" onclick="homeButton()">Назад</button>
-</main>
-<footer>
-</footer>
-<script>
-    if (localStorage.getItem("username")){
-        
-    }
-    function homeButton(){
-        location.href="index.html";
-    }
-    document.addEventListener("DOMContentLoaded", function(){
+        <button class="button-back" onclick="homeButton()">Назад</button>
+    </main>
+    <footer>
+    </footer>
+    <script>
+        if (localStorage.getItem("username")){
+            document.addEventListener("DOMContentLoaded", function(){
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+                fetch("http://domain/getpost?postid="+id).then((response)=>response.json())
+                .then((data)=>{
+                    if (data.res=="good"){
+                        post = data.post;
+                        document.getElementById("name").innerHTML = post[0];
+                        document.getElementById("code").innerHTML = post[3];
+                        document.getElementById("tags").innerHTML = post[2];
+                        document.getElementById("language").innerHTML = post[1];
+                    } else {
+                        document.getElementsByTagName("main") == '<h1 style="color: red;">Что-то пошло не так. Попробуйте позже</h1>'
+                    }
+                })
+            });
+        } else {
+            document.addEventListener("DOMContentLoaded", function(){
+                document.getElementsByTagName("main") == '<h1 style="color: red;">У Вас нет доступа к этому к этой странице</h1>'
+            });
+        }
+            function homeButton(){
+            location.href="index.html";
+        }
 
-    });
-</script>
+    </script>
 </body>
 </html>
