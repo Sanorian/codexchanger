@@ -19,27 +19,35 @@
     .heading{
         text-align: center;
     }
-    textarea{
+    .code{
+        font-family: 'Open Sans', sans-serif;
         margin-left: auto;
         margin-right: auto;
         display:flex;
         width: 80%;
         height: 50%;
         border-radius: 10px;
+        background-color: #D9D9D9;
     }
     .settings{
         display: flex;
         justify-content: center;
     }
     .tags{
+        font-family: 'Open Sans', sans-serif;
         text-align: center;
     }
     .language{
+        font-family: 'Open Sans', sans-serif;
         text-align: center;
     }
-    input{
-        border-radius: 25px;
-        width: 500px;
+    .setting{
+        border-radius: 20px;
+        background-color: #D9D9D9;
+        width: auto;
+        padding-top:0.1vmin;
+        padding-bottom:0.1vmin;
+        padding-left: 0.1vmin;
     }
     .button-back{
         margin-top: 150px;
@@ -59,15 +67,15 @@
 </header>
 <main>
     <h2 class="heading">Название записи</h2>
-    <textarea placeholder="ТЕКСТ" id="code"></textarea>
+    <div class="code"><p id="code"></p></div>
     <div class="settings">
         <div style="position: absolute; left: 10%">
             <h2 class="tags">Тэги</h2>
-            <input placeholder="">
+            <div class="setting"><p id="tags">Фильтрация</p></div>
         </div>
         <div style="position: absolute; right: 10%">
             <h2 class="language">Язык</h2>
-            <input placeholder="JavaScript">
+            <div class="setting"><p id="language">Javascript</p></div>
         </div>
     </div>
     <button class="button-back" onclick="homeButton()">Назад</button>
@@ -75,8 +83,8 @@
 <footer>
 </footer>
 <script>
-
     if (localStorage.getItem("username")){
+        
     }
     function homeButton(){
         location.href="index.html";
