@@ -134,29 +134,34 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs ORDER BY ID DESC"
+            request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs"
             if language and search and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"' AND Tags LIKE '%"
                 for tag in tags.split(" "):
-                    request += " AND Tags LIKE '%"+tag+"%'"
+                    request += tag+"%"
+                request += "'"
             elif language and search:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"'"
             elif language and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"' AND Tags LIKE '%"
                 for tag in tags.split(" "):
-                    request += " AND Tags LIKE '%"+tag+"%'"
+                    request += tag+"%"
+                request += "'"
             elif search and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%'"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND Tags LIKE '%"
                 for tag in tags.split(" "):
-                    request += " AND Tags LIKE '%"+tag+"%'"
+                    request += tag+"%"
+                request += "'"
             elif language:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"'"
             elif search:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%'"
             elif tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"
                 for tag in tags.split(" "):
-                    request += " Tags LIKE '%"+tag+"%'"
+                    request += tag+"%"
+                request += "'"
+            request += " ORDER BY ID DESC"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
