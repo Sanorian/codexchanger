@@ -91,13 +91,13 @@ def getOnePost(postid: str):
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate, Code FROM Programs WHERE ID='"+postid+"'"
+            request = "SELECT ProgramName, CodeLanguage, Tags, Code FROM Programs WHERE ID='"+postid+"'"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postData = cursor.fetchone()
                 if postData == None:
                     return {"res": "bad", "reason": "postid"}
-                return postData
+                return {"res":"good", "post": postData}
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -160,7 +160,7 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
-                return postsData
+                return {"res":"good", "posts": postsData}
     except Error as e:
         print(e)
         return {"res": "bad"}
@@ -200,7 +200,7 @@ def adminGetAllPosts(password: str, adminid: str):
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postsData = cursor.fetchall()
-                return postsData
+                return {"res":"good", "posts": postsData}
     except Error as e:
         print(e)
         return {"res": "bad"}
