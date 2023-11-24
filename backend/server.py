@@ -136,31 +136,31 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
         ) as connection:
             request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs"
             if language and search and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"' AND Tags LIKE '%"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"' INTERSECT "
                 for tag in tags.split(" "):
-                    request += tag+"%"
-                request += "'"
+                    request += "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"+tag+"%' INTERSECT "
+                request = request.rsplit(' INTERSECT ', 1)[0]
             elif language and search:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND CodeLanguage='"+language+"'"
             elif language and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"' AND Tags LIKE '%"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"' INTERSECT "
                 for tag in tags.split(" "):
-                    request += tag+"%"
-                request += "'"
+                    request += "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"+tag+"%' INTERSECT "
+                request = request.rsplit(' INTERSECT ', 1)[0]
             elif search and tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' AND Tags LIKE '%"
+                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%' INTERSECT "
                 for tag in tags.split(" "):
-                    request += tag+"%"
-                request += "'"
+                    request += "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"+tag+"%' INTERSECT "
+                request = request.rsplit(' INTERSECT ', 1)[0]
             elif language:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE CodeLanguage='"+language+"'"
             elif search:
                 request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Code LIKE '%"+search+"%'"
             elif tags:
-                request = "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"
+                request = ""
                 for tag in tags.split(" "):
-                    request += tag+"%"
-                request += "'"
+                    request += "SELECT ID, ProgramName, CodeLanguage, Tags, PublicationDate FROM Programs WHERE Tags LIKE '%"+tag+"%' INTERSECT "
+                request = request.rsplit(' INTERSECT ', 1)[0]
             request += " ORDER BY ID DESC"
             with connection.cursor() as cursor:
                 cursor.execute(request)
