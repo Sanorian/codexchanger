@@ -97,6 +97,7 @@
         }
         .navigationButton:hover{
             background-color: #CECECE;
+            cursor: pointer;
         }
         .filterDropdown{
             font-family: 'Open Sans', sans-serif;
@@ -105,7 +106,7 @@
             display: flex;
             visibility: hidden;
             flex-direction: column;
-            align-items: start;
+            align-items: center;
             padding-left: 1vw;
             padding-right: 1vw;
             padding-top: 0.5vw;
@@ -144,22 +145,55 @@
         }
         .languageButton:hover{
             background-color: #187C1F;
+            cursor: pointer;
         }
         .languageDropdown{
-            font-family: 'Open Sans', sans-serif;
             background-color: #CECECE;
             position: relative;
             display: flex;
             visibility: hidden;
             flex-direction: column;
-            align-items: start;
+            align-items: center;
             padding-left: 1vw;
             padding-right: 1vw;
             padding-top: 0.5vw;
             padding-bottom: 0.5vw;
-            border-radius: 1vmin;
             height: 0vmin;
+            width: 90%;
             z-index: 1;
+        }
+        .formRadioHidden{
+            display: flex;
+            flex-direction: row;
+            margin-block-start: 0.5em;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            box-sizing: content-box;
+            width: 100%;
+        }
+        .formRadioHidden:hover{
+            background-color: #BABABA;
+            border-radius: 1.5vmin;
+            cursor: pointer;
+        }
+        .formRadioHidden input{
+            position: absolute;
+            opacity: 0;
+            display: block;
+            height: 0;
+            width: 0;
+        }
+        .formRadioHidden input + .radio + .text{
+            font-family: cursive;
+            font-weight: bold;
+            color: #565656;
+        }
+        .formRadioHidden input:checked + .radio + .text{
+            text-shadow: 1px 1px 2px green;
+            background-color: #BABABA;
+            border-radius: 1.5vmin;
+            cursor: default;
         }
         .show{
             visibility: visible;
@@ -208,9 +242,31 @@
                         <polygon points="5,10 10,3 0,3" fill="#FFFFFF"/>
                     </svg></button>
                     <div class="languageDropdown" id="languageDropdown">
-                        <div class="dropdownContainer">
-                            <p class="languageDropdownHeaderText">Языки</p>
-                        </div>
+                        <label for="languageChoice1" class="formRadioHidden">
+                            <input id="languageChoice1" type="radio" name="language" value="Java">
+                            <span class="radio"></span>
+                            <span class="text">Java</span>
+                        </label>
+                        <label for="languageChoice2" class="formRadioHidden">
+                            <input id="languageChoice2" type="radio" name="language" value="Python">
+                            <span class="radio"></span>
+                            <span class="text">Python</span>
+                        </label>
+                        <label for="languageChoice3" class="formRadioHidden">
+                            <input id="languageChoice3" type="radio" name="language" value="C++">
+                            <span class="radio"></span>
+                            <span class="text">C++</span>
+                        </label>
+                        <label for="languageChoice4" class="formRadioHidden">
+                            <input id="languageChoice4" type="radio" name="language" value="JavaScript">
+                            <span class="radio"></span>
+                            <span class="text">JavaScript</span>
+                        </label>
+                        <label for="languageChoice5" class="formRadioHidden">
+                            <input id="languageChoice5" type="radio" name="language" value="CSS">
+                            <span class="radio"></span>
+                            <span class="text">CSS</span>
+                        </label>
                     </div>
                 </div>
             </div>
