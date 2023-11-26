@@ -288,13 +288,17 @@
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
             }
             try{
-                fetch("http://domain/")
+                fetch("http://domain/").catch((err)=>{
+                    console.log(err);
+                    document.getElementsByClassName("main")[0].classList.add("errorMain");
+                    document.getElementsByClassName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";
+                })
                 .then((response)=>(response.json()))
                 .then((data)=>{
                     let main = document.getElementsByClassName('main')[0];
                     data.forEach(post => {
                         main.innerHTML += ```
-
+                        
                         ```
                     });
                 });

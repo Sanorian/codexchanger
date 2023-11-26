@@ -44,7 +44,7 @@
     .setting{
         border-radius: 20px;
         background-color: #D9D9D9;
-        width: auto;
+        width: 30vw;
         padding-top:0.1vmin;
         padding-bottom:0.1vmin;
         padding-left: 0.1vmin;
@@ -61,6 +61,13 @@
     }
     h1{
         font-family: 'Open Sans', sans-serif; 
+    }
+    h2{
+        font-family: 'Open Sans', sans-serif; 
+    }
+    p{
+        font-family: 'Open Sans', sans-serif;
+        padding: 0.5vmin;
     }
 </style>
 </head>
@@ -105,7 +112,7 @@
             });
         } else {
             document.addEventListener("DOMContentLoaded", function(){
-                document.getElementsByTagName("main") == '<h1 style="color: red;">У Вас нет доступа к этому к этой странице</h1>'
+                document.getElementsByTagName("main") == '<h1 style="color: red;">Авторизуйтесь, для просмотра страницы</h1>'
             });
         }
             function homeButton(){

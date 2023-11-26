@@ -5,20 +5,67 @@
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
     header{
-        background-color: #0C969E;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .logo{
-        font-family: 'Odor Mean Chey', serif;
-        font-size: 5vmin;
-        color: #ffffff;
-        margin-left: 2vw;
-    }
+            background-color: #0C969E;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .account{
+            background-color: #CECECE;
+            position: absolute;
+            visibility: collapse;
+            height: 0vmin;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            padding-left: 1vw;
+            padding-right: 1.7vw;
+            padding-top: 0.5vw;
+            padding-bottom: 0.5vw;
+            transition: height 0.5s;
+            border-radius: 1vmin;
+        }
+        .account button{
+            border: 0vmin;
+            font-family: 'Open Sans', sans-serif;
+            border-radius: 1.5vmin;
+            height: 0vmin;
+            transition: height 0.1s;
+            margin-bottom:0.5vmin;
+            margin-top: 0.5vmin;
+        }
+        .account a{
+            border: 0vmin;
+            font-family: 'Open Sans', sans-serif;
+            height: 0vmin;
+            transition: height 0.1s;
+            margin-top: 0.5vmin;
+            margin-bottom:0.5vmin;
+        }
+        .userImage{
+            margin-right: 5vw;
+        }
+        .userImage:hover .account{
+            visibility: visible;
+            height: auto;
+        }
+        .userImage:hover .account button{
+            height: 3.5vmin;
+        }
+        .userImage:hover .account a{
+            height: 2vmin;
+        }
+        .logo{
+            font-family: 'Odor Mean Chey', serif;
+            font-size: 5vmin;
+            color: #ffffff;
+            margin-left: 2vw;
+        }
     main{
         display: flex;
         flex-direction: column;
+        margin-left: 2.5vw;
+        align-items: start;
     }
     main .bottom_piece{
         display: flex;
@@ -28,43 +75,129 @@
         display: flex;
         flex-direction: column;
     }
+    main .bottom_piece div input{
+        width: 40vw;
+    }
+    .tagsdiv{
+        margin-right: 15vw;
+    }
     textarea{
         resize: none;
+        border-radius: 20px;
+        padding: 1.5vmin;
+        border: 0;
+        background-color: #D9D9D9;
+        font-family: 'Open Sans', sans-serif;
+        height: 35vh;
+        width: 95vw;
+    }
+    input{
+        border-radius: 20px;
+        padding: 1vmin;
+        border: 0;
+        background-color: #D9D9D9;
+        font-family: 'Open Sans', sans-serif;
+    }
+    h2{
+        font-family: 'Open Sans', sans-serif;
+    }
+    h1{
+        font-family: 'Open Sans', sans-serif;
+
+    }
+    main button{
+        background-color:#22AE28;
+        color:#ffffff;
+        font-family: 'Open Sans', sans-serif;
+        border-radius: 20px;
+        border: 0;
+        margin-top: 2vh;
+        padding: 0.7vmin;
+        font-size: larger;
+    }
+    .postname{
+        width: 95vw;
     }
 </style>
 </head>
 <body>
-<header>
-    <div class="logo" onclick="homeButton()">Codexchanger</div>
-</header>
-<main>
-    <h2>Название</h2>
-    <input placeholder="Фильтрация пузырьком" id="name">
-    <h2>Код</h2>
-    <textarea placeholder="print('Hello world!')" id="code"></textarea>
-    <div class="bottom_piece">
-        <div>
-            <h2>Теги</h2>
-            <input placeholder="фильтрация сервер бд" id="tags">
+    <header>
+        <div class="logo" onclick="homeButton()">Codexchanger</div>
+        <div class="userImage">
+            <img src="userimage.png">
+            <div class="account" id="account">
+            </div>
         </div>
-        <div>
-            <h2>Язык</h2>
-            <input id="language" placeholder="Python">
+    </header>
+    <main>
+        <h1>Создать запись</h1>
+        <h2 id="errorPlace"></h2>
+        <h2>Название</h2>
+        <input placeholder="Фильтрация пузырьком" id="name" class="postname">
+        <h2>Код</h2>
+        <textarea placeholder="print('Hello world!')" id="code"></textarea>
+        <div class="bottom_piece">
+            <div class="tagsdiv">
+                <h2>Теги</h2>
+                <input placeholder="фильтрация сервер бд" id="tags">
+            </div>
+            <div class="languageclass">
+                <h2>Язык</h2>
+                <input id="language" placeholder="Python">
+            </div>
         </div>
-    </div>
-</main>
-<footer>
-</footer>
-<script>
-    
-    if (localStorage.getItem("username")){
-    }
-    function homeButton(){
-        location.href="index.html";
-    }
-    document.addEventListener("DOMContentLoaded", function(){
-        
-    });
-</script>
+        <button onclick="post()">Опубликовать</button>
+    </main>
+    <footer>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            username = localStorage.getItem("username");
+            if (!username) document.getElementsByTagName("main") == '<h1 style="color: red;">Авторизуйтесь, для просмотра страницы</h1>';
+            document.getElementById('account').innerHTML = `
+                    <a href="location.href='#'" style="color:#FFFFFF;">`+username+`</a>
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="returnTo()">Обратно</button>
+                    <button style="background-color:#AE2222;color:#ffffff" onclick="logOut()">Выйти</button>`;
+        });
+
+        function logOut(){
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+            location.href="index.html";
+        }
+
+        function homeButton(){
+            location.href="index.html";
+        }
+
+        function returnTo(){
+            location.href=sessionStorage.getItem("lastlocation");
+        }
+
+        function post(){
+            let name=document.getElementById("name").value, 
+                code=document.getElementById("code").value, 
+                tags=document.getElementById("tags").value, 
+                language=document.getElementById("language").value,
+                errorPlace = document.getElementById("errorPlace");
+
+            if (name=="" || code=="" || language=="" || tags==""){
+                errorPlace.innerHTML = "Все поля должны быть заполнены";
+            } else {
+                let date = new Date;
+                fetch("http://domain/addpost?username="+localStorage.getItem("username")+"&name="+name+"&code="+code+"&language="+language+"&tags="+tags+"&publicationdate="+`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`).catch((err)=>{
+                    console.log(err);
+                    errorPlace.innerHTML = "Ошибка. Попробуйте еще раз";
+                }).then((resposne)=>(resposne.json))
+                .then((data)=>{
+                    if (data.res=="good"){
+                        errorPlace.innerHTML = "Все прошло успешно";
+                    } else {
+                        errorPlace.innerHTML = "Произошла ошибка. Попробуйте позже";
+                    }
+                })
+            }
+        }
+    </script>
 </body>
 </html>
