@@ -102,7 +102,7 @@
             } else {
                 errorPlace.innerHTML = "";
                 try{
-                    fetch("http://domain/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
+                    fetch("http://http://92.53.105.101/registration?mail="+mail+"&nickname"+nickname+"&password="+password1)
                     .then((response)=>response.json()).then((data)=>{
                         if (data.res=='bad'){
                             switch(data.reason){

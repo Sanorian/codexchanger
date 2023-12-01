@@ -97,7 +97,7 @@
             document.addEventListener("DOMContentLoaded", function(){
                 const urlParams = new URLSearchParams(window.location.search);
                 const id = urlParams.get('id');
-                fetch("http://domain/getpost?postid="+id).then((response)=>response.json())
+                fetch(`http://92.53.105.101/getpost?postid=${id}`).then((response)=>response.json())
                 .then((data)=>{
                     if (data.res=="good"){
                         post = data.post;

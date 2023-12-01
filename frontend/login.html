@@ -96,7 +96,7 @@
                 errorPlace.innerHTML = "Оба поля должны быть заполнены";
             } else {
                 errorPlace.innerHTML = "";
-                fetch("http://domain/login?mail="+mail+"&password="+password)
+                fetch("http://http://92.53.105.101/login?mail="+mail+"&password="+password)
                 .then((response)=>response.json()).then((data)=>{
                     if (data.res=='bad'){
                         switch (data.reason) {

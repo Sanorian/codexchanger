@@ -185,7 +185,7 @@
                 errorPlace.innerHTML = "Все поля должны быть заполнены";
             } else {
                 let date = new Date;
-                fetch("http://domain/addpost?username="+localStorage.getItem("username")+"&name="+name+"&code="+code+"&language="+language+"&tags="+tags+"&publicationdate="+`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`).catch((err)=>{
+                fetch("http://http://92.53.105.101/addpost?username="+localStorage.getItem("username")+"&name="+name+"&code="+code+"&language="+language+"&tags="+tags+"&publicationdate="+`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`).catch((err)=>{
                     console.log(err);
                     errorPlace.innerHTML = "Ошибка. Попробуйте еще раз";
                 }).then((resposne)=>(resposne.json))

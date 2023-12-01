@@ -204,6 +204,35 @@
             font-size: 10vmin;
             color: red;
         }
+        .post div{
+            background-color: #D9D9D9;
+            margin: 1vmin;
+            padding: 1vmin;
+            border-radius: 20px;
+        }
+        .setting{
+            margin: 0.5vmin;
+            width: 12vw;
+            padding: 0.5vmin;
+        }
+        .post{
+            display: flex;
+            flex-direction: column;
+            width: 70vw;
+            margin-left: 15vw;
+            margin-right: 15vw;
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            border-radius: 20px;
+        }
+        .posts{
+            display: flex;
+            flex-direction: column;
+        }
+        p{
+            font-family: 'Open Sans', sans-serif;
+            font-size: larger;
+        }
     </style>
 </head>
 <body>
@@ -271,6 +300,9 @@
                 </div>
             </div>
         </div>
+        <div class="posts">
+
+        </div>
     </main>
     <footer>
 
@@ -288,19 +320,35 @@
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
             }
             try{
-                fetch("http://domain/").catch((err)=>{
+                fetch("http://92.53.105.101/").catch((err)=>{
                     console.log(err);
-                    document.getElementsByClassName("main")[0].classList.add("errorMain");
-                    document.getElementsByClassName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";
+                    document.getElementsByTagName("main")[0].classList.add("errorMain");
+                    document.getElementsByTagName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";
                 })
                 .then((response)=>(response.json()))
                 .then((data)=>{
-                    let main = document.getElementsByClassName('main')[0];
-                    data.forEach(post => {
-                        main.innerHTML += ```
-                        
-                        ```
+                    let postsPlace = document.getElementsByClassName('posts')[0];
+                    let posts = "";
+                    if (data.res=="bad"){
+                        document.getElementsByTagName("main")[0].classList.add("errorMain");
+                        document.getElementsByTagName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";                        
+                    }else{
+                        data.posts.forEach(post => {
+                            name = post[2];
+                            id = post[0];
+                            language=post[3];
+                            tags = post[4];
+                            posts += `
+                            <div class="post" onclick="goTo(${id})">
+                                <div>
+                                    <p class="setting">Название: ${name}</p>
+                                    <p class="setting">Язык: ${language}</p>
+                                    <p class="setting">Тэги: ${tags}</p>
+                                </div>
+                            </div>`;
                     });
+                    postsPlace.innerHTML = posts;
+                    }
                 });
             } catch (e) {
                 console.log(e);
@@ -322,6 +370,9 @@
             localStorage.removeItem("password");
             document.getElementById('account').innerHTML = `
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
+        }
+        function goTo(id){
+            location.href = `read_post.html?id=${id}`;
         }
     </script>
 </body>
