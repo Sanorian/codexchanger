@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from mysql.connector import connect, Error
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 app.add_middleware(
@@ -29,9 +30,14 @@ def getDataAll():
         print(e)
         return {"res": "bad"}
 
+class RegistrationModel(BaseModel):
+    mail: str
+    nickname: str
+    password: str
+
 #Регистрация
-@app.get("/registration")
-def registration(mail: str, nickname: str, password: str):
+@app.post("/registration")
+def registration(model: RegistrationModel):
     try:
         with connect(
             host="localhost",
@@ -40,27 +46,30 @@ def registration(mail: str, nickname: str, password: str):
             database="CodeXChanger_DB"
         ) as connection:
             with connection.cursor() as cursor:
-                getEmail = "SELECT * FROM Users WHERE Email='"+mail+"'"
+                getEmail = f"SELECT * FROM Users WHERE Email='{model.mail}'"
                 cursor.execute(getEmail)
                 if len(cursor.fetchall())!=0:
                     return {"res":"bad", "reason":"mail"}
-                getName = "SELECT * FROM Users WHERE UserName='"+nickname+"'"
+                getName = f"SELECT * FROM Users WHERE UserName='{model.nickname}'"
                 cursor.execute(getName)
                 if len(cursor.fetchall())!=0:
                     return {"res":"bad", "reason":"nickname"}
-                request = "INSERT INTO Users (UserName, Email, Password) VALUES ('"+nickname+"', '"+mail+"', '"+password+"')"
+                request = f"INSERT INTO Users (UserName, Email, Password) VALUES ('{model.nickname}', '{model.mail}', '{model.password}')"
                 cursor.execute(request)
                 connection.commit()
-                return {"res": "good", "password": password, "username": nickname}
+                return {"res": "good", "password": model.password, "username": model.nickname}
     except Error as e:
         print(e)
         return {"res": "bad"}
     
 
+class LoginModel(BaseModel):
+    mail: str
+    password: str
 
 #Вход
-@app.get("/login")
-def logIn(mail: str, password: str):
+@app.post("/login")
+def logIn(model: LoginModel):
     try:
         with connect(
             host="localhost",
@@ -69,21 +78,24 @@ def logIn(mail: str, password: str):
             database="CodeXChanger_DB"
         ) as connection:
             with connection.cursor() as cursor:
-                getMail = "SELECT Password, UserName FROM Users WHERE Email='" + mail + "'"
+                getMail = f"SELECT Password, UserName FROM Users WHERE Email='{model.mail}'"
                 cursor.execute(getMail)
                 detectedUserPassword = cursor.fetchone()
                 if detectedUserPassword == None:
                     return {"res": "bad", "reason": "mail"}
-                if detectedUserPassword[0] == password:
-                    return {"res": "good", "username": detectedUserPassword[1], "password": password}
+                if detectedUserPassword[0] == model.password:
+                    return {"res": "good", "username": detectedUserPassword[1], "password": model.password}
                 return {"res": "bad", "reason": "password"}
     except Error as e:
         print(e)
         return {"res": "bad"}
 
+class GetPostModel(BaseModel):
+    postid: str
+
 #Получение конкретного поста
-@app.get("/getpost")
-def getOnePost(postid: str):
+@app.post("/getpost")
+def getOnePost(model: GetPostModel):
     try:
         with connect(
             host="localhost",
@@ -91,7 +103,7 @@ def getOnePost(postid: str):
             password="lord",
             database="CodeXChanger_DB"
         ) as connection:
-            request = "SELECT ProgramName, CodeLanguage, Tags, Code FROM Programs WHERE ID='"+postid+"'"
+            request = f"SELECT ProgramName, CodeLanguage, Tags, Code FROM Programs WHERE ID={model.postid}"
             with connection.cursor() as cursor:
                 cursor.execute(request)
                 postData = cursor.fetchone()
@@ -103,8 +115,16 @@ def getOnePost(postid: str):
         return {"res": "bad"}
 
 #Добавление постов
-@app.get("/addpost")
-def addPost(username: str, name: str, code: str, language: str, tags: str, publicationdate: str):
+class AddPostModel(BaseModel):
+    username: str
+    name: str
+    code: str
+    tags: str
+    language: str
+    publicationdate: str
+
+@app.put("/addpost")
+def addPost(model: AddPostModel):
     try:
         with connect(
             host="localhost",
@@ -113,10 +133,7 @@ def addPost(username: str, name: str, code: str, language: str, tags: str, publi
             database="CodeXChanger_DB"
         ) as connection:
             with connection.cursor() as cursor:
-                getIDRequest = "SELECT ID FROM Users WHERE Username='"+username+"'"
-                cursor.execute(getIDRequest)
-                userID = str(cursor.fetchone()[0])
-                request = "INSERT INTO Programs (User_ID, ProgramName, Code, CodeLanguage, Tags, PublicationDate) VALUES ("+userID+", '"+name+"', '"+code+"', '"+ language+"', '"+tags+"', '"+publicationdate+"')"
+                request = f"INSERT INTO Programs (User_ID, ProgramName, Code, CodeLanguage, Tags, PublicationDate) VALUES ((SELECT ID FROM Users WHERE Username='{model.username}), '{model.name}', '{model.code}', '{model.language}', '{model.tags}', '{model.publicationdate}')"
                 cursor.execute(request)
                 connection.commit()
                 return {"res": "good"}
