@@ -100,7 +100,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const id = urlParams.get('id');
                 fetch("http://domain/getpost", {
-                    method: "POST",
+                    method: "PUT",
                     body: JSON.stringify({
                         postid: str
                     }),
