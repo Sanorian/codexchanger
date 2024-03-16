@@ -1,0 +1,139 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codexchanger</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Odor+Mean+Chey&display=swap');
+    header{
+        background-color: #0C969E;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .logo{
+        font-family: 'Odor Mean Chey', serif;
+        font-size: 5vmin;
+        color: #ffffff;
+        margin-left: 2vw;
+    }
+    .heading{
+        text-align: center;
+    }
+    .code{
+        font-family: 'Open Sans', sans-serif;
+        margin-left: auto;
+        margin-right: auto;
+        display:flex;
+        width: 80%;
+        height: 50%;
+        border-radius: 10px;
+        background-color: #D9D9D9;
+    }
+    .settings{
+        display: flex;
+        justify-content: center;
+    }
+    .tags{
+        font-family: 'Open Sans', sans-serif;
+        text-align: center;
+    }
+    .language{
+        font-family: 'Open Sans', sans-serif;
+        text-align: center;
+    }
+    .setting{
+        border-radius: 20px;
+        background-color: #D9D9D9;
+        width: 30vw;
+        padding-top:0.1vmin;
+        padding-bottom:0.1vmin;
+        padding-left: 0.1vmin;
+    }
+    .button-back{
+        margin-top: 150px;
+        width: 200px;
+        margin-left: 100px;
+        border-radius: 25px;
+        background-color: #00FF00;
+        color: #FFFFFF;
+        height: 30px;
+        font-size: 20px;
+    }
+    h1{
+        font-family: 'Open Sans', sans-serif; 
+    }
+    h2{
+        font-family: 'Open Sans', sans-serif; 
+    }
+    p{
+        font-family: 'Open Sans', sans-serif;
+        padding: 0.5vmin;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="homeButton()">Codexchanger</div>
+    </header>
+    <main>
+        <h2 class="heading" id="name"></h2>
+        <div class="code"><code></code></div>
+        <div class="settings">
+            <div style="position: absolute; left: 10%">
+                <h2 class="tags">Тэги</h2>
+                <div class="setting"><p id="tags"></p></div>
+            </div>
+            <div style="position: absolute; right: 10%">
+                <h2 class="language">Язык</h2>
+                <div class="setting"><p id="language"></p></div>
+            </div>
+        </div>
+        <button class="button-back" onclick="homeButton()">Назад</button>
+    </main>
+    <footer>
+    </footer>
+    <script>
+        if (localStorage.getItem("username")){
+            document.addEventListener("DOMContentLoaded", function(){
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+                fetch("http://domain/getpost", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        postid: str
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                }).catch(err=>{
+                    console.log(err);
+                    errorPlace.innerHTML="Что-то пошло не так";
+                })
+                .then((response)=>response.json())
+                .then((data)=>{
+                    if (data.res=="good"){
+                        post = data.post;
+                        document.getElementById("name").innerHTML = post[0];
+                        document.getElementsByTagName("code")[0].innerHTML = post[3];
+                        document.getElementById("tags").innerHTML = post[2];
+                        document.getElementById("language").innerHTML = post[1];
+                    } else {
+                        document.getElementsByTagName("main") == '<h1 style="color: red;">Что-то пошло не так. Попробуйте позже</h1>'
+                    }
+                })
+            });
+        } else {
+            document.addEventListener("DOMContentLoaded", function(){
+                document.getElementsByTagName("main") == '<h1 style="color: red;">Авторизуйтесь, для просмотра страницы</h1>'
+            });
+        }
+        
+        function homeButton(){
+            location.href="/";
+        }
+
+    </script>
+</body>
+</html>

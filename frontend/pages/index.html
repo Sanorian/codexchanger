@@ -239,7 +239,7 @@
     <header>
         <div class="logo" onclick="homeButton()">Codexchanger</div>
         <div class="userImage">
-            <img src="userimage.png">
+            <img src="/static/userimage.png">
             <div class="account" id="account">
             </div>
         </div>
@@ -313,11 +313,11 @@
             if (username){
                 document.getElementById('account').innerHTML = `
                     <a href="location.href='#'" style="color:#FFFFFF;">`+username+`</a>
-                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='create_post.html'">Создать запись</button>
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='/create_post'">Создать запись</button>
                     <button style="background-color:#AE2222;color:#ffffff" onclick="logOut()">Выйти</button>`;
             } else {
                 document.getElementById('account').innerHTML = `
-                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='/login'">Войти</button>`;
             }
             try{
                 fetch("http://92.53.105.101/").catch((err)=>{
@@ -357,7 +357,7 @@
             }
         });
         function homeButton(){
-            location.href = "index.html";
+            location.href = "/index";
         }
         function navigationButton(){
             document.getElementById("filterDropdown").classList.toggle("show");
@@ -369,10 +369,10 @@
             localStorage.removeItem("username");
             localStorage.removeItem("password");
             document.getElementById('account').innerHTML = `
-                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='login.html'">Войти</button>`;
+                    <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='/login'">Войти</button>`;
         }
         function goTo(id){
-            location.href = `read_post.html?id=${id}`;
+            location.href = `/post?id=${id}`;
         }
     </script>
 </body>

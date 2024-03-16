@@ -1,0 +1,45 @@
+services:
+ backend:
+    build: ./backend
+    ports:
+      - '8080:80'
+    networks:
+      - server_network
+
+ frontend:
+    build: ./frontend
+    ports:
+      - '80:80'
+    networks:
+      - server_network
+
+ database:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE: CodeXChanger_DB
+      MYSQL_USER_FILE: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_HOST: '%'
+    secrets:
+      - mysql_user
+      - mysql_password
+      - mysql_root_password
+    networks:
+      - server_network
+
+networks:
+ server_network:
+
+secrets:
+ mysql_password:
+    file: ./db/password.txt
+ mysql_root_password:
+    file: ./db/password_root.txt
+ mysql_user:
+    file: ./db/user.txt

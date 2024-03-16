@@ -79,15 +79,15 @@
             <h3>Повторите пароль</h3>
             <input type="password" id="password2">
             <button onclick="registration()">Зарегистрироваться</button>
-            <a href="login.html">Войти</a>
+            <a href="/login">Войти</a>
         </div>
     </main>
     <script>
         if (localStorage.getItem('username')){
-            location.href = "index.html";
+            location.href = "/";
         }
         function homeButton(){
-            location.href = "index.html";
+            location.href = "/";
         }
         function registration(){
             let password1 = document.getElementById("password1").value,
@@ -131,7 +131,7 @@
                             errorPlace.innerHTML = "Вы успешно зарегистрированы";
                             localStorage.setItem("password", data.password);
                             localStorage.setItem("username", data.username);
-                            location.href="index.html";
+                            location.href="/";
                         }
                     })
                 } catch(err){errorPlace.innerHTML="Что-то пошло не так";}

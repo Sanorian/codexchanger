@@ -16,7 +16,7 @@ app.add_middleware(
 def getDataAll():
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -40,7 +40,7 @@ class RegistrationModel(BaseModel):
 def registration(model: RegistrationModel):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -72,7 +72,7 @@ class LoginModel(BaseModel):
 def logIn(model: LoginModel):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -98,7 +98,7 @@ class GetPostModel(BaseModel):
 def getOnePost(model: GetPostModel):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -127,7 +127,7 @@ class AddPostModel(BaseModel):
 def addPost(model: AddPostModel):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -146,7 +146,7 @@ def addPost(model: AddPostModel):
 def getPosts(search: str | None = None, language: str | None = None, tags: str | None = None):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -193,7 +193,7 @@ def getPosts(search: str | None = None, language: str | None = None, tags: str |
 def adminlogin(email: str, password: str):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -213,7 +213,7 @@ def adminlogin(email: str, password: str):
 def adminGetAllPosts(password: str, adminid: str):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"
@@ -231,7 +231,7 @@ def adminGetAllPosts(password: str, adminid: str):
 def adminModeratePost(postid: str, adminid: str, moderationdate: str, adminpassword: str):
     try:
         with connect(
-            host="localhost",
+            host="database",
             user="lord",
             password="lord",
             database="CodeXChanger_DB"

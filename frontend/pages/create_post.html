@@ -124,7 +124,7 @@
     <header>
         <div class="logo" onclick="homeButton()">Codexchanger</div>
         <div class="userImage">
-            <img src="userimage.png">
+            <img src="/static/userimage.png">
             <div class="account" id="account">
             </div>
         </div>
@@ -163,11 +163,11 @@
         function logOut(){
             localStorage.removeItem("username");
             localStorage.removeItem("password");
-            location.href="index.html";
+            location.href="/index";
         }
 
         function homeButton(){
-            location.href="index.html";
+            location.href="/index";
         }
 
         function returnTo(){

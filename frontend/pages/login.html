@@ -76,17 +76,17 @@
             <h3 >Введите пароль</h3>
             <input type="password">
             <button onclick="logIn()">Войти</button>
-            <a href="registration.html">Зарегистрироваться</a>
+            <a href="/registration">Зарегистрироваться</a>
         </div>
     </main>
     <footer>
     </footer>
     <script>
         if (localStorage.getItem('username')){
-            location.href = "index.html";
+            location.href = "/";
         }
         function homeButton(){
-            location.href = "index.html";
+            location.href = "/";
         }
         function logIn(){
             let password = document.getElementById("password").value,
@@ -123,7 +123,7 @@
                     } else {
                         localStorage.setItem("username", data.username);
                         localStorage.setItem("password", data.password);
-                        location.href="index.html";
+                        location.href="/";
                     }
                 })
             }
