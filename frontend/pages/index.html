@@ -320,7 +320,7 @@
                     <button style="background-color:#22AE28;color:#ffffff" onclick="location.href='/login'">Войти</button>`;
             }
             try{
-                fetch("http://92.53.105.101/").catch((err)=>{
+                fetch("http://localhost:8080/").catch((err)=>{
                     console.log(err);
                     document.getElementsByTagName("main")[0].classList.add("errorMain");
                     document.getElementsByTagName("main")[0].innerHTML = "Что-то пошло не так, попробуйте после";
@@ -357,7 +357,7 @@
             }
         });
         function homeButton(){
-            location.href = "/index";
+            location.href = "/";
         }
         function navigationButton(){
             document.getElementById("filterDropdown").classList.toggle("show");

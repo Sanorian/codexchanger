@@ -163,11 +163,11 @@
         function logOut(){
             localStorage.removeItem("username");
             localStorage.removeItem("password");
-            location.href="/index";
+            location.href="/";
         }
 
         function homeButton(){
-            location.href="/index";
+            location.href="/";
         }
 
         function returnTo(){
@@ -185,7 +185,7 @@
                 errorPlace.innerHTML = "Все поля должны быть заполнены";
             } else {
                 let date = new Date;
-                fetch("http://domain/addpost", {
+                fetch("http://localhost:8080/addpost", {
                     method: "POST",
                     body: JSON.stringify({
                         username: localStorage.getItem("username"),
